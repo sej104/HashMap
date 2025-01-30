@@ -19,6 +19,7 @@ class HashMap {
   }
 
   set(key, value) {
+    const hashCode = this.hash(key);
     const bucket = this.array[this.hash(key)];
 
     if (!bucket) {
@@ -30,6 +31,15 @@ class HashMap {
     } else {
       bucket.append({ key, value });
     }
+  }
+
+  get(key) {
+    const bucket = this.array[this.hash(key)];
+    if (!bucket) return null;
+
+    const keyIndex = bucket.find(key);
+    const keyValue = bucket.at(keyIndex).value.value;
+    return keyValue;
   }
 }
 
