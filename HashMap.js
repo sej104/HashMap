@@ -57,6 +57,16 @@ class HashMap {
     if (!bucket.size()) this.array[this.hash(key)] = null;
     return true;
   }
+
+  length() {
+    let total = 0;
+    for (let i = 0; i < this.array.length; i++) {
+      if (this.array[i]) {
+        total += this.array[i].size();
+      }
+    }
+    return total;
+  }
 }
 
 export default HashMap;
