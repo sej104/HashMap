@@ -47,6 +47,16 @@ class HashMap {
     if (!bucket || !bucket.contains(key)) return false;
     return true;
   }
+
+  remove(key) {
+    let bucket = this.array[this.hash(key)];
+    if (!bucket || !bucket.contains(key)) return false;
+
+    const keyIndex = bucket.find(key);
+    bucket.removeAt(keyIndex);
+    if (!bucket.size()) this.array[this.hash(key)] = null;
+    return true;
+  }
 }
 
 export default HashMap;
