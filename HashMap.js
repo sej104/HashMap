@@ -4,7 +4,7 @@ import Node from "./Node.js";
 class HashMap {
   constructor() {
     this.capacity = 16;
-    this.loadFactor = 0.8;
+    this.loadFactor = 0.75;
     this.buckets = [];
   }
 
@@ -19,6 +19,22 @@ class HashMap {
     return hashCode;
   }
 
+  increaseBuckets() {
+    this.capacity = this.capacity * 2;
+    const copy = [...this.buckets];
+    this.clear();
+
+    for (let bucket of copy) {
+      if (bucket) {
+        let temp = bucket.head;
+        while (temp) {
+          this.set(temp.value.key, temp.value.value);
+          temp = temp.nextNode;
+        }
+      }
+    }
+  }
+
   set(key, value) {
     const hashCode = this.hash(key);
     const bucket = this.buckets[hashCode];
@@ -30,6 +46,10 @@ class HashMap {
       bucket.at(keyIndex).value.value = value;
     } else {
       bucket.append({ key, value });
+    }
+
+    if (this.length() > this.capacity * this.loadFactor) {
+      this.increaseBuckets();
     }
   }
 
