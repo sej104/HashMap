@@ -1,8 +1,8 @@
 import Node from "./Node.js";
 
 class LinkedList {
-  constructor() {
-    this.head = null;
+  constructor(head = null) {
+    this.head = head;
   }
 
   append(value) {
