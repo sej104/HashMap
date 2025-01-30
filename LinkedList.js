@@ -74,11 +74,11 @@ class LinkedList {
     return false;
   }
 
-  find(value) {
+  find(key) {
     let currentIndex = 0;
     let temp = this.head;
     while (temp) {
-      if (temp.value === value) return currentIndex;
+      if (temp.value.key === key) return currentIndex;
       temp = temp.nextNode;
       currentIndex += 1;
     }
