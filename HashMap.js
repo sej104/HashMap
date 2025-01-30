@@ -35,11 +35,17 @@ class HashMap {
 
   get(key) {
     const bucket = this.array[this.hash(key)];
-    if (!bucket) return null;
+    if (!bucket || !bucket.contains(key)) return null;
 
     const keyIndex = bucket.find(key);
     const keyValue = bucket.at(keyIndex).value.value;
     return keyValue;
+  }
+
+  has(key) {
+    const bucket = this.array[this.hash(key)];
+    if (!bucket || !bucket.contains(key)) return false;
+    return true;
   }
 }
 
