@@ -67,6 +67,10 @@ class HashMap {
     }
     return total;
   }
+
+  clear() {
+    this.array = [];
+  }
 }
 
 export default HashMap;
