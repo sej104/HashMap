@@ -71,6 +71,20 @@ class HashMap {
   clear() {
     this.array = [];
   }
+
+  keys() {
+    const keys = [];
+    for (let i = 0; i < this.array.length; i++) {
+      if (this.array[i]) {
+        let temp = this.array[i].head;
+        while (temp) {
+          keys.push(temp.value.key);
+          temp = temp.nextNode;
+        }
+      }
+    }
+    return keys;
+  }
 }
 
 export default HashMap;
