@@ -19,16 +19,16 @@ class HashMap {
   }
 
   set(key, value) {
-    const hashCode = this.hash(key);
+    const bucket = this.array[this.hash(key)];
 
-    if (!this.array[hashCode]) {
-      this.array[hashCode] = new LinkedList({ key, value });
+    if (!bucket) {
+      this.array[hashCode] = new LinkedList();
       this.array[hashCode].append({ key, value });
-    } else if (this.array[hashCode].contains("serg")) {
-      const index = this.array[hashCode].find(key);
-      this.array[hashCode].at(index).value.value = value;
+    } else if (bucket.contains(key)) {
+      const keyIndex = bucket.find(key);
+      bucket.at(keyIndex).value.value = value;
     } else {
-      this.array[hashCode].append({ key, value });
+      bucket.append({ key, value });
     }
   }
 }
