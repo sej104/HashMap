@@ -99,6 +99,20 @@ class HashMap {
     }
     return keyValues;
   }
+
+  entries() {
+    const entries = [];
+    for (let i = 0; i < this.array.length; i++) {
+      if (this.array[i]) {
+        let temp = this.array[i].head;
+        while (temp) {
+          entries.push([temp.value.key, temp.value.value]);
+          temp = temp.nextNode;
+        }
+      }
+    }
+    return entries;
+  }
 }
 
 export default HashMap;
