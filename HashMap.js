@@ -1,10 +1,11 @@
 import LinkedList from "./LinkedList.js";
+import Node from "./Node.js";
 
 class HashMap {
   constructor() {
     this.capacity = 16;
     this.loadFactor = 0.8;
-    this.array = [];
+    this.buckets = [];
   }
 
   hash(key) {
@@ -20,11 +21,10 @@ class HashMap {
 
   set(key, value) {
     const hashCode = this.hash(key);
-    const bucket = this.array[this.hash(key)];
+    const bucket = this.buckets[hashCode];
 
     if (!bucket) {
-      this.array[hashCode] = new LinkedList();
-      this.array[hashCode].append({ key, value });
+      this.buckets[hashCode] = new LinkedList(new Node({ key, value }));
     } else if (bucket.contains(key)) {
       const keyIndex = bucket.find(key);
       bucket.at(keyIndex).value.value = value;
@@ -34,49 +34,55 @@ class HashMap {
   }
 
   get(key) {
-    const bucket = this.array[this.hash(key)];
+    const hashCode = this.hash(key);
+    const bucket = this.buckets[hashCode];
+
     if (!bucket || !bucket.contains(key)) return null;
 
     const keyIndex = bucket.find(key);
-    const keyValue = bucket.at(keyIndex).value.value;
-    return keyValue;
+    return bucket.at(keyIndex).value.value;
   }
 
   has(key) {
-    const bucket = this.array[this.hash(key)];
+    const hashCode = this.hash(key);
+    const bucket = this.buckets[hashCode];
+
     if (!bucket || !bucket.contains(key)) return false;
     return true;
   }
 
   remove(key) {
-    let bucket = this.array[this.hash(key)];
+    const hashCode = this.hash(key);
+    const bucket = this.buckets[hashCode];
+
     if (!bucket || !bucket.contains(key)) return false;
 
     const keyIndex = bucket.find(key);
     bucket.removeAt(keyIndex);
-    if (!bucket.size()) this.array[this.hash(key)] = null;
+    if (!bucket.size()) this.buckets[hashCode] = null;
+
     return true;
   }
 
   length() {
-    let total = 0;
-    for (let i = 0; i < this.array.length; i++) {
-      if (this.array[i]) {
-        total += this.array[i].size();
+    let count = 0;
+    for (let bucket of this.buckets) {
+      if (bucket) {
+        count += bucket.size();
       }
     }
-    return total;
+    return count;
   }
 
   clear() {
-    this.array = [];
+    this.buckets = [];
   }
 
   keys() {
     const keys = [];
-    for (let i = 0; i < this.array.length; i++) {
-      if (this.array[i]) {
-        let temp = this.array[i].head;
+    for (let bucket of this.buckets) {
+      if (bucket) {
+        let temp = bucket.head;
         while (temp) {
           keys.push(temp.value.key);
           temp = temp.nextNode;
@@ -87,24 +93,24 @@ class HashMap {
   }
 
   values() {
-    const keyValues = [];
-    for (let i = 0; i < this.array.length; i++) {
-      if (this.array[i]) {
-        let temp = this.array[i].head;
+    const values = [];
+    for (let bucket of this.buckets) {
+      if (bucket) {
+        let temp = bucket.head;
         while (temp) {
-          keyValues.push(temp.value.value);
+          values.push(temp.value.value);
           temp = temp.nextNode;
         }
       }
     }
-    return keyValues;
+    return values;
   }
 
   entries() {
     const entries = [];
-    for (let i = 0; i < this.array.length; i++) {
-      if (this.array[i]) {
-        let temp = this.array[i].head;
+    for (let bucket of this.buckets) {
+      if (bucket) {
+        let temp = bucket.head;
         while (temp) {
           entries.push([temp.value.key, temp.value.value]);
           temp = temp.nextNode;
