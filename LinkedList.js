@@ -14,10 +14,6 @@ class LinkedList {
     }
   }
 
-  prepend(value) {
-    this.head = new Node(value, this.head);
-  }
-
   size() {
     let count = 0;
     let temp = this.head;
@@ -26,17 +22,6 @@ class LinkedList {
       count += 1;
     }
     return count;
-  }
-
-  head() {
-    return this.head;
-  }
-
-  tail() {
-    if (!this.head) return null;
-    let temp = this.head;
-    while (temp.nextNode) temp = temp.nextNode;
-    return temp;
   }
 
   at(index) {
@@ -48,21 +33,6 @@ class LinkedList {
       currentIndex += 1;
     }
     return temp;
-  }
-
-  pop() {
-    if (!this.head) return;
-    if (this.size() === 1) {
-      this.head = null;
-      return;
-    }
-    let previous;
-    let current = this.head;
-    while (current.nextNode) {
-      previous = current;
-      current = current.nextNode;
-    }
-    previous.nextNode = null;
   }
 
   contains(key) {
@@ -83,36 +53,6 @@ class LinkedList {
       currentIndex += 1;
     }
     return null;
-  }
-
-  toString() {
-    let temp = this.head;
-    let string = "";
-    while (temp) {
-      string += `( ${temp.value} ) -> `;
-      temp = temp.nextNode;
-    }
-    return (string += "null");
-  }
-
-  insertAt(value, index) {
-    if (index < 0) return;
-    if (index === 0) {
-      this.prepend(value);
-      return;
-    }
-    if (index >= this.size()) {
-      this.append(value);
-      return;
-    }
-
-    let currentIndex = 0;
-    let temp = this.head;
-    while (currentIndex + 1 < index) {
-      temp = temp.nextNode;
-      currentIndex += 1;
-    }
-    temp.nextNode = new Node(value, temp.nextNode);
   }
 
   removeAt(index) {
