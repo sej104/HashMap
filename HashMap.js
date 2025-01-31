@@ -19,6 +19,12 @@ class HashMap {
     return hashCode;
   }
 
+  checkIndex(index) {
+    if (index < 0 || index >= this.buckets.capacity) {
+      throw new Error("Trying to access index out of bounds");
+    }
+  }
+
   increaseBuckets() {
     this.capacity = this.capacity * 2;
     const copy = [...this.buckets];
@@ -37,6 +43,7 @@ class HashMap {
 
   set(key, value) {
     const hashCode = this.hash(key);
+    this.checkIndex(hashCode);
     const bucket = this.buckets[hashCode];
 
     if (!bucket) {
@@ -55,6 +62,7 @@ class HashMap {
 
   get(key) {
     const hashCode = this.hash(key);
+    this.checkIndex(hashCode);
     const bucket = this.buckets[hashCode];
 
     if (!bucket || !bucket.contains(key)) return null;
@@ -65,6 +73,7 @@ class HashMap {
 
   has(key) {
     const hashCode = this.hash(key);
+    this.checkIndex(hashCode);
     const bucket = this.buckets[hashCode];
 
     if (!bucket || !bucket.contains(key)) return false;
@@ -73,6 +82,7 @@ class HashMap {
 
   remove(key) {
     const hashCode = this.hash(key);
+    this.checkIndex(hashCode);
     const bucket = this.buckets[hashCode];
 
     if (!bucket || !bucket.contains(key)) return false;
