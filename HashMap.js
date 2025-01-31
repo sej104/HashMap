@@ -5,7 +5,7 @@ class HashMap {
   constructor() {
     this.capacity = 16;
     this.loadFactor = 0.75;
-    this.buckets = [];
+    this.buckets = new Array(this.capacity);
   }
 
   hash(key) {
@@ -20,7 +20,7 @@ class HashMap {
   }
 
   checkIndex(index) {
-    if (index < 0 || index >= this.buckets.capacity) {
+    if (index < 0 || index >= this.buckets.length) {
       throw new Error("Trying to access index out of bounds");
     }
   }
@@ -105,7 +105,7 @@ class HashMap {
   }
 
   clear() {
-    this.buckets = [];
+    this.buckets = new Array(this.capacity);
   }
 
   keys() {
