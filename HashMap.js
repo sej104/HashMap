@@ -106,7 +106,6 @@ class HashMap {
 
   clear() {
     this.buckets = new Array(this.capacity);
-    this.capacity = 16;
   }
 
   keys() {
