@@ -28,7 +28,7 @@ class HashMap {
   increaseBuckets() {
     this.capacity = this.capacity * 2;
     const copy = [...this.buckets];
-    this.clear();
+    this.buckets = new Array(this.capacity);
 
     for (let bucket of copy) {
       if (bucket) {
@@ -105,6 +105,7 @@ class HashMap {
   }
 
   clear() {
+    this.capacity = 16;
     this.buckets = new Array(this.capacity);
   }
 
